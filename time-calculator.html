@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+    <!-- <link rel="icon" href="favicon.ico"> -->
+
+    <title>Time Tracker GUI</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-secondary flex-md-nowrap p-0 shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Time Tracker GUI</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Development
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" target="_blank"
+                                    href="https://v3.ja.vuejs.org/guide/introduction.html">Vue.js</a></li>
+                            <li><a class="dropdown-item" target="_blank"
+                                    href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="app-time-tracking">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky list-group list-group-flush scrollarea">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <h6 class="d-flex justify-content-between px-3 mt-3 mb-3 text-muted">
+                                <span>Tools</span>
+                            </h6>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="index.html">
+                                <span data-feather="clock"></span>Time Tracker
+                            </a>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight active"
+                                href="time-calculator.html">
+                                <span data-feather="activity"></span>Time Converter
+                            </a>
+                            <h6 class="d-flex justify-content-between px-3 mt-3 mb-3 text-muted">
+                                <span>References</span>
+                            </h6>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="usage.html">
+                                <span data-feather="file"></span>Usage </a>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="https://v3.ja.vuejs.org/guide/introduction.html"> <span
+                                    data-feather="github"></span>Git Repository </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
+                    <h1>Time Converter</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Convert time hh:mm:ss to hours, minutes or seconds</h5>
+                    </div>
+                    <div class="card-body">
+                        <form @submit.prevent="calculate">
+                            <div class="mb-3">
+                                <label class="form-label">Please enter hh:mm:ss</label>
+                                <input v-model="inputTime" class="form-control" placeholder="12:34:56"
+                                    pattern="\d{2}:\d{2}:\d{2}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Please select unit</label>
+                                <select class="form-select" v-model="selectedUnit" @click="calculate">
+                                    <option>hour</option>
+                                    <option>minute</option>
+                                    <option>second</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3 pb-3 border-bottom">
+                                <button type="submit" class="btn btn-primary">{{buttonContent}}</button>
+                            </div>
+
+                            <div>
+                                <h6>Result: {{result}} [{{selectedUnit}}]</h6>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./time-calculator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+    <script>
+        feather.replace()
+    </script>
+
+</body>
+
+</html>

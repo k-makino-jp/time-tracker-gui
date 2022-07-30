@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+    <!-- <link rel="icon" href="favicon.ico"> -->
+
+    <title>Time Tracker GUI</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-secondary flex-md-nowrap p-0 shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Time Tracker GUI</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Development
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" target="_blank"
+                                    href="https://v3.ja.vuejs.org/guide/introduction.html">Vue.js</a></li>
+                            <li><a class="dropdown-item" target="_blank"
+                                    href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="app-time-tracking">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky list-group list-group-flush scrollarea">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <h6 class="d-flex justify-content-between px-3 mt-3 mb-3 text-muted">
+                                <span>Tools</span>
+                            </h6>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight active"
+                                href="index.html">
+                                <span data-feather="clock"></span>Time Tracker
+                            </a>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="time-calculator.html">
+                                <span data-feather="activity"></span>Time Converter
+                            </a>
+                            <h6 class="d-flex justify-content-between px-3 mt-3 mb-3 text-muted">
+                                <span>References</span>
+                            </h6>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="usage.html">
+                                <span data-feather="file"></span>Usage </a>
+                            <a class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+                                href="https://v3.ja.vuejs.org/guide/introduction.html"> <span
+                                    data-feather="github"></span>Git Repository </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
+                    <h1>Time Tracker</h1>
+                </div>
+
+                <!-- <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Process succeeded!</h4>
+                    <hr>
+                    The difference between {{commitShaSrc}} and {{commitShaDest}} has calculated.
+                </div> -->
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4>Current Task</h4>
+                    </div>
+                    <div class="card-body">
+                        <form @submit.prevent="triggerTimeTracking">
+                            <div class="mb-3" id="commit-sha-src">
+                                <label for="exampleInputEmail1" class="form-label">Please enter current task
+                                    name</label>
+                                <input v-model="taskName" class="form-control" list="datalistOptions"
+                                    placeholder="e.g. Coding" pattern=".+" required>
+                                <datalist id="datalistOptions">
+                                    <option value="Rest">
+                                    <option value="Meeting">
+                                    <option value="Research">
+                                    <option value="Designing">
+                                    <option value="Coding">
+                                    <option value="Testing">
+                                </datalist>
+                            </div>
+
+                            <div class="mb-3 pb-3 border-bottom">
+                                <button type="submit" class="btn btn-primary">{{buttonContent}}</button>
+                            </div>
+
+                            <div>
+                                <h6>Spend Time: {{currentSpendTime}}</h6>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4>Today's Activities</h4>
+                        <div class="d-flex">
+                            <h4 style="color:#a9a9a9">Total Time Spend:&nbsp;</h4>
+                            <h4>{{totalTimeSpend}}</h4>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-item-light" style="background: #f8f9fa;">
+                            <div class="d-flex justify-content-between">
+                                <div class="col-md">
+                                    <b class="each-task-spend-time float-start">Task Name
+                                    </b>
+                                </div>
+                                <div class="col-md">
+                                    <b class="each-task-spend-time float-end">
+                                        Start - End
+                                    </b>
+                                </div>
+                                <div class="col-md">
+                                    <b class="each-task-spend-time float-end">Time Spend</b>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-for="task in tasks" class="list-group-item list-group-item-light">
+                            <div class="d-flex justify-content-between">
+                                <div class="col-md">
+                                    {{ task.taskName }}
+                                </div>
+                                <div class="col-md">
+                                    <b class="each-task-spend-time float-end">
+                                        {{ task.startTime }} - {{task.endTime}}
+                                    </b>
+                                </div>
+                                <div class="col-md">
+                                    <b class="each-task-spend-time float-end">{{ task.spendTime }}</b>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button type="button" @click="convertToJson" class="btn btn-secondary">Convert to json</button>
+                    <div v-if="isConvertToJson">
+                        <pre><code>{{tasks}}</code></pre>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+    <script>
+        feather.replace()
+    </script>
+
+</body>
+
+</html>
