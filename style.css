@@ -1,6 +1,6 @@
 body {
   font-size: .875rem;
-  background-color: #f8f9fa;
+  background-color: #f8f8f8
 }
 
 .feather {
@@ -52,15 +52,22 @@ body {
 }
 
 .list-group .list-group-item.sidebaritem {
-  background-color: #f8f9fa;
+  background-color: #e7e7e7;
+  border-top-color: #e7e7e7;
+  border-bottom-color: #e7e7e7;
   /* or whatever color you'd like */
 }
 
 .list-group .list-group-item.sidebaritem:hover {
-  background-color: #d3d3d3;
+  background-color: #c0c0c0;
+  border-top-color: #e7e7e7;
+  border-bottom-color: #e7e7e7;
   /* or whatever color you'd like */
 }
 
+.sidebar {
+  background-color: #e7e7e7;
+}
 .sidebar-sticky {
   position: relative;
   top: 0;
@@ -82,9 +89,12 @@ body {
 }
 
 .sidebar .nav-link.active {
-  color: #727272;
-  background-color: #dcdcdc;
-  border-color: #c0c0c0;
+  background-color: #cccccc;
+  border-color: #acacac;
+  border-top-color: #e7e7e7;
+  border-bottom-color: #e7e7e7;
+  /* border-left-color: #333;
+  border-left-width: 4px; */
 }
 
 .sidebar .nav-link:hover .feather,
@@ -96,6 +106,9 @@ body {
    * Navbar
    */
 
+.navbar {
+  background-color: #333;
+}
 .navbar-brand {
   padding-left: .2rem;
   padding-top: .75rem;
