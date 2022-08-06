@@ -1,6 +1,7 @@
 body {
   font-size: .875rem;
-  background-color: #f8f8f8
+  background-color: #f8f8f8;
+  padding-top: 50px; 
 }
 
 .feather {
