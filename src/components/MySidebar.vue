@@ -4,12 +4,14 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <h6 class="d-flex justify-content-between px-3 mt-3 mb-3 text-muted"> <span>Tools</span> </h6>
-          <router-link to="/" @click="activate('/')" class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+          <router-link to="/" @click="activate('/')"
+            class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
             :class="{ active: isActiveTimeTracker }">
             <span data-feather="clock"></span>Time Tracker
           </router-link>
 
-          <router-link to="/timetrackerforazuredevops" @click="activate('/timetrackerforazuredevops')" class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+          <router-link to="/timetrackerforazuredevops" @click="activate('/timetrackerforazuredevops')"
+            class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
             :class="{ active: isActiveTimeTrackerForAzureDevOps }">
             <span data-feather="clock"></span>Time Tracker For Azure DevOps
           </router-link>
@@ -42,7 +44,7 @@ export default {
   data() {
     return {
       isActiveTimeTracker: false,
-      isActiveTimeTrackerForAzureDevOps:false,
+      isActiveTimeTrackerForAzureDevOps: false,
       isActiveTimeConverter: false,
       isActiveTimeTrackerUsage: false
     }
@@ -96,21 +98,21 @@ export default {
 }
 
 .list-group .list-group-item.sidebaritem {
-  background-color: #e7e7e7;
-  border-top-color: #e7e7e7;
-  border-bottom-color: #e7e7e7;
+  background-color: #ffffff;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
   /* or whatever color you'd like */
 }
 
 .list-group .list-group-item.sidebaritem:hover {
-  background-color: #c0c0c0;
-  border-top-color: #e7e7e7;
-  border-bottom-color: #e7e7e7;
+  background-color: #dcdcdc;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
   /* or whatever color you'd like */
 }
 
 .sidebar {
-  background-color: #e7e7e7;
+  background-color: #ffffff;
 }
 
 .sidebar-sticky {
@@ -137,7 +139,8 @@ export default {
 }
 
 .sidebar .nav-link.active {
-  background-color: #cccccc;
+  color: #007bff;
+  background-color: #e6e6e6;
   border-color: #acacac;
   border-top-color: #e7e7e7;
   border-bottom-color: #e7e7e7;

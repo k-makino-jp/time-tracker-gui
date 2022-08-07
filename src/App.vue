@@ -33,7 +33,7 @@ export default {
 
 <style>
 body {
-      overflow-y: scroll;
+  overflow-y: scroll;
   font-size: .875rem;
   background-color: #f8f8f8;
   padding-top: 50px;

@@ -1,16 +1,17 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-secondary flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark flex-md-nowrap p-0 shadow">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">Time Tracker GUI</a>
         <div class="dropdown collapse navbar-collapse" id="navbarSupportedContent">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Development
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" target="_blank" href="https://v3.ja.vuejs.org/guide/introduction.html">Vue.js</a>
-            <a class="dropdown-item" target="_blank" href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a>
+            <a class="dropdown-item" target="_blank"
+              href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a>
           </div>
         </div>
       </div>
@@ -40,7 +41,14 @@ body {
 }
 
 .btn {
+  color: #fff;
+  background-color: #4169e1;
   border-radius: 0%;
+}
+
+.btn:hover {
+  color: #dcdcdc;
+  background-color: #4169e1;
 }
 
 .form-control {
@@ -130,7 +138,7 @@ body {
    */
 
 .navbar {
-  background-color: #333;
+  background-color: #4169e1;
 }
 
 .navbar-brand {

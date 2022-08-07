@@ -1,7 +1,7 @@
 <template>
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
-        <h1>Time Tracker for Azure DevOps</h1>
+        <h2>Time Tracker for Azure DevOps</h2>
     </div>
     <div class="alert alert-warning" role="alert">
         <h4 class="alert-heading">Warning!</h4>
