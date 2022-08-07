@@ -15,7 +15,6 @@
 <script>
 import MyHeader from './components/MyHeader.vue'
 import MySidebar from './components/MySidebar.vue'
-// import TimeTracker from './components/TimeTracker.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import feather from 'feather-icons'
 

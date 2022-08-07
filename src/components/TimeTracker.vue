@@ -62,7 +62,8 @@
         </tbody>
       </table>
 
-      <button type="button" @click="convertToJson" class="btn btn-secondary mb-3">Convert to json</button>
+      <button type="button" @click="convertToJson" class="btn btn-secondary mb-3 mr-3">Convert to json</button>
+      <button type="button" @click="removeLocalStorageItem" class="btn btn-secondary mb-3">Remove Cache</button>
       <div v-if="isConvertToJson" class="border">
         <pre><code>{{ tasks }}</code></pre>
       </div>
@@ -82,7 +83,26 @@ export default {
       isConvertToJson: false
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => { vm.load(); })
+  },
   methods: {
+    createLocalStorageKey() {
+      // const today = new Date();
+      // return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '';
+      return 'time-tracker-gui';
+    },
+    load() {
+      this.tasks = JSON.parse(localStorage.getItem(this.createLocalStorageKey()));
+      if (this.tasks == null) {
+        this.tasks = []
+      }
+    },
+    removeLocalStorageItem() {
+      localStorage.removeItem(this.createLocalStorageKey());
+      this.tasks = [];
+      this.totalTimeSpend = ''
+    },
     canBeStarted() {
       return this.taskName.length > 0
     },
@@ -128,6 +148,8 @@ export default {
       this.totalTimeSpend = totalHours.padStart(2, '0') + ":" + totalMinutes.padStart(2, '0') + ":" + totalSeconds.padStart(2, '0');
       this.taskName = '';// clear task name for form
       this.currentSpendTime = '00:00:00'
+
+      localStorage.setItem(this.createLocalStorageKey(), JSON.stringify(this.tasks));
     },
     convertToJson() {
       this.isConvertToJson = true;
