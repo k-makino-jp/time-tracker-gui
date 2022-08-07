@@ -16,6 +16,7 @@
 import MyHeader from './components/MyHeader.vue'
 import MySidebar from './components/MySidebar.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import feather from 'feather-icons'
 
 export default {
