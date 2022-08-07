@@ -134,7 +134,7 @@ body {
 }
 
 .navbar-brand {
-  padding-left: .2rem;
+  padding-left: .1rem;
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1rem;

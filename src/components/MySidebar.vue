@@ -9,6 +9,11 @@
             <span data-feather="clock"></span>Time Tracker
           </router-link>
 
+          <router-link to="/timetrackerforazuredevops" @click="activate('/timetrackerforazuredevops')" class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
+            :class="{ active: isActiveTimeTrackerForAzureDevOps }">
+            <span data-feather="clock"></span>Time Tracker For Azure DevOps
+          </router-link>
+
           <router-link to="/timeconverter" @click="activate('/timeconverter')"
             class="nav-link list-group-item sidebaritem list-group-item-action px-4 py-3 lh-tight"
             :class="{ active: isActiveTimeConverter }">
@@ -37,6 +42,7 @@ export default {
   data() {
     return {
       isActiveTimeTracker: false,
+      isActiveTimeTrackerForAzureDevOps:false,
       isActiveTimeConverter: false,
       isActiveTimeTrackerUsage: false
     }
@@ -44,11 +50,15 @@ export default {
   methods: {
     activate(path) {
       this.isActiveTimeTracker = false;
+      this.isActiveTimeTrackerForAzureDevOps = false;
       this.isActiveTimeConverter = false;
       this.isActiveTimeTrackerUsage = false;
       switch (path) {
         case '/':
           this.isActiveTimeTracker = true;
+          break;
+        case '/timetrackerforazuredevops':
+          this.isActiveTimeTrackerForAzureDevOps = true;
           break;
         case '/timeconverter':
           this.isActiveTimeConverter = true;

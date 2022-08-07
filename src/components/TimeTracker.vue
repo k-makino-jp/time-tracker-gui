@@ -97,11 +97,21 @@ export default {
       if (this.tasks == null) {
         this.tasks = []
       }
+      let totalTime = 0;
+      for (let i in this.tasks) {
+        const spendTime = new Date('1970-01-01T' + this.tasks[i].spendTime + 'Z');
+        totalTime += spendTime.getTime();
+      }
+      const total = new Date(totalTime);
+      const totalHours = total.getHours() + (total.getTimezoneOffset() / 60) + '';
+      const totalMinutes = total.getMinutes() + '';
+      const totalSeconds = total.getSeconds() + '';
+      this.totalTimeSpend = totalHours.padStart(2, '0') + ":" + totalMinutes.padStart(2, '0') + ":" + totalSeconds.padStart(2, '0');
     },
     removeLocalStorageItem() {
       localStorage.removeItem(this.createLocalStorageKey());
       this.tasks = [];
-      this.totalTimeSpend = ''
+      this.totalTimeSpend = '00:00:00'
     },
     canBeStarted() {
       return this.taskName.length > 0
@@ -165,16 +175,16 @@ export default {
         this.currentSpendTime = diffHours.padStart(2, '0') + ":" + diffMinutes.padStart(2, '0') + ":" + diffSeconds.padStart(2, '0');
       }
     },
-    confirmSave(event) {
-      event.returnValue = "";
-    },
+    // confirmSave(event) {
+    //   event.returnValue = "";
+    // },
   },
-  created() {
-    window.addEventListener("beforeunload", this.confirmSave);
-  },
-  unmounted() {
-    window.removeEventListener("beforeunload", this.confirmSave);
-  },
+  // created() {
+  //   window.addEventListener("beforeunload", this.confirmSave);
+  // },
+  // unmounted() {
+  //   window.removeEventListener("beforeunload", this.confirmSave);
+  // },
   mounted() {
     setInterval(this.updateCurrentTime, 1000);
   }
