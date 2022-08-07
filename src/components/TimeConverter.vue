@@ -1,7 +1,76 @@
+<template>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
+    <h1>Time Converter</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h4>Convert time hh:mm:ss to hours, minutes or seconds</h4>
+    </div>
+    <div class="card-body">
+      <form @submit.prevent="calculate">
+        <div class="mb-3">
+          <label class="form-label">Please enter hh:mm:ss</label>
+          <input v-model="inputTime" class="form-control" placeholder="12:34:56" pattern="\d{2}:\d{2}:\d{2}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Please select unit</label>
+          <div class="form-select">
+            <select v-model="selectedUnit" @click="calculate">
+              <option>hour</option>
+              <option>minute</option>
+              <option>second</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3 pb-3 border-bottom">
+          <button type="submit" class="btn btn-primary">{{ buttonContent }}</button>
+        </div>
+
+        <div>
+          <h6>Result: {{ result }} [{{ selectedUnit }}]</h6>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      buttonContent: 'Calculate',
+      result: 0,
+      inputTime: '',
+      selectedUnit: 'hour',
+      activeTimeConverter: 'active'
+    }
+  },
+  methods: {
+    calculate() {
+      const inputTimeElements = this.inputTime.split(':');
+      const hours = parseInt(inputTimeElements[0]);
+      const minutes = parseInt(inputTimeElements[1]);
+      const seconds = parseInt(inputTimeElements[2]);
+      if (this.selectedUnit == 'hour') {
+        this.result = hours + minutes / 60 + seconds / 3600;
+      } else if (this.selectedUnit == 'minute') {
+        this.result = hours * 60 + minutes + seconds / 60;
+      } else {
+        this.result = hours * 3600 + minutes * 60 + seconds;
+      }
+    },
+  }
+}
+</script>
+
+<style scoped>
 body {
   font-size: .875rem;
   background-color: #f8f8f8;
-  padding-top: 50px; 
+  padding-top: 50px;
 }
 
 .feather {
@@ -69,6 +138,7 @@ body {
 .sidebar {
   background-color: #e7e7e7;
 }
+
 .sidebar-sticky {
   position: relative;
   top: 0;
@@ -110,6 +180,7 @@ body {
 .navbar {
   background-color: #333;
 }
+
 .navbar-brand {
   padding-left: .2rem;
   padding-top: .75rem;
@@ -142,3 +213,4 @@ body {
 .each-task-spend-time {
   font-family: SFMono-Regular;
 }
+</style>
