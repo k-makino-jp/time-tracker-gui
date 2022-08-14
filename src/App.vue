@@ -2,10 +2,10 @@
   <MyHeader></MyHeader>
   <div class="container-fluid">
     <div class="row">
-      <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+      <nav class="col-md-3 col-lg-2 d-md-block shadow-sm">
         <MySidebar></MySidebar>
       </nav>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <main class="col-md-9 col-lg-10 px-md-4">
         <router-view></router-view>
       </main>
     </div>
@@ -33,9 +33,9 @@ export default {
 
 <style>
 body {
+  background-color: #f8f8f8;
   overflow-y: scroll;
   font-size: .875rem;
-  background-color: #f8f8f8;
   padding-top: 50px;
 }
 </style>
