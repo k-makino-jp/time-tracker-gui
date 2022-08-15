@@ -1,6 +1,6 @@
 <template>
-  <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-    <div class="list-group scrollarea">
+  <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+    <div class="position-sticky list-group list-group-flush scrollarea">
       <ul class="nav flex-column">
         <li class="nav-item">
           <!-- Tools -->
