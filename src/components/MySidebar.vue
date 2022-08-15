@@ -6,22 +6,18 @@
           <!-- Tools -->
           <h6 class="px-3 mt-3 mb-3 text-muted"> <span>Tools</span> </h6>
 
-          <router-link to="/" @click="activate('/')"
-            class="nav-link list-group-item sidebaritem px-4 py-3"
-            :class="{ active: isActiveTimeTracker }">
+          <router-link to="/" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
             <span data-feather="clock"></span>Time Tracker
           </router-link>
 
-          <router-link to="/timeconverter" @click="activate('/timeconverter')"
-            class="nav-link list-group-item sidebaritem px-4 py-3" :class="{ active: isActiveTimeConverter }">
+          <router-link to="/timeconverter" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
             <span data-feather="activity"></span>Time Converter
           </router-link>
 
           <!-- References -->
           <h6 class="px-3 mt-3 mb-3 text-muted"> <span>References</span> </h6>
 
-          <router-link to="/usage" @click="activate('/usage')" class="nav-link list-group-item sidebaritem px-4 py-3"
-            :class="{ active: isActiveTimeTrackerUsage }">
+          <router-link to="/usage" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
             <span data-feather="file"></span>Usage
           </router-link>
 
@@ -33,37 +29,6 @@
     </div>
   </nav>
 </template>
-
-
-<script>
-export default {
-  data() {
-    return {
-      isActiveTimeTracker: false,
-      isActiveTimeConverter: false,
-      isActiveTimeTrackerUsage: false
-    }
-  },
-  methods: {
-    activate(path) {
-      this.isActiveTimeTracker = false;
-      this.isActiveTimeConverter = false;
-      this.isActiveTimeTrackerUsage = false;
-      switch (path) {
-        case '/':
-          this.isActiveTimeTracker = true;
-          break;
-        case '/timeconverter':
-          this.isActiveTimeConverter = true;
-          break;
-        case '/usage':
-          this.isActiveTimeTrackerUsage = true;
-          break;
-      }
-    }
-  }
-}
-</script>
 
 <style scoped>
 .sidebar {

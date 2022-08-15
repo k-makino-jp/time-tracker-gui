@@ -62,11 +62,7 @@
         </tbody>
       </table>
 
-      <button type="button" @click="convertToJson" class="btn btn-secondary mb-3 mr-3">Convert to json</button>
-      <button type="button" @click="removeLocalStorageItem" class="btn btn-secondary mb-3">Remove Cache</button>
-      <div v-if="isConvertToJson" class="border">
-        <pre><code>{{ tasks }}</code></pre>
-      </div>
+      <button type="button" @click="removeLocalStorageItem" class="btn btn-secondary mb-3">Clear</button>
     </div>
   </div>
 </template>
@@ -80,7 +76,6 @@ export default {
       totalTimeSpend: '',
       taskName: '',
       tasks: [],
-      isConvertToJson: false
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -117,7 +112,6 @@ export default {
       return this.taskName.length > 0
     },
     triggerTimeTracking() {
-      this.isConvertToJson = false
       if (!this.isStarted) {
         this.startTimeTracking();
       } else {
@@ -161,9 +155,6 @@ export default {
 
       localStorage.setItem(this.createLocalStorageKey(), JSON.stringify(this.tasks));
     },
-    convertToJson() {
-      this.isConvertToJson = true;
-    },
     updateCurrentTime() {
       if (this.isStarted) {
         this.endTime = new Date();
@@ -175,16 +166,7 @@ export default {
         this.currentSpendTime = diffHours.padStart(2, '0') + ":" + diffMinutes.padStart(2, '0') + ":" + diffSeconds.padStart(2, '0');
       }
     },
-    // confirmSave(event) {
-    //   event.returnValue = "";
-    // },
   },
-  // created() {
-  //   window.addEventListener("beforeunload", this.confirmSave);
-  // },
-  // unmounted() {
-  //   window.removeEventListener("beforeunload", this.confirmSave);
-  // },
   mounted() {
     setInterval(this.updateCurrentTime, 1000);
   }
