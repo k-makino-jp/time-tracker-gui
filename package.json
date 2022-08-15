@@ -13,6 +13,8 @@
     "feather-icons": "^4.29.0",
     "frappe-gantt": "^0.6.1",
     "jquery": "^3.6.0",
+    "sass": "^1.54.4",
+    "sass-loader": "^13.0.2",
     "vue": "^3.2.13",
     "vue-router": "^4.1.3"
   },

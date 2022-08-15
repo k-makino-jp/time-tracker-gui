@@ -59,6 +59,8 @@
 .sidebar .nav-link {
   font-weight: 500;
   color: #333;
+  border-left-color: #ffffff;
+  border-left-width: 4px;
 }
 
 .sidebar .nav-link .feather {
@@ -75,6 +77,8 @@
   border-color: #acacac;
   border-top-color: #e7e7e7;
   border-bottom-color: #e7e7e7;
+  border-left-color: #007bff;
+  border-left-width: 4px;
 }
 
 .sidebar .nav-link:hover .feather,
