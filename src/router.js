@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import TimeTracker from './components/TimeTracker.vue'
 import TimeConverter from './components/TimeConverter.vue'
+import PomodoroTimer from './components/PomodoroTimer.vue'
 import TimeTrackerUsage from './components/TimeTrackerUsage.vue'
 
 const routes = [
@@ -11,6 +12,10 @@ const routes = [
     {
         path: '/timeconverter',
         component: TimeConverter
+    },
+    {
+        path: '/pomodorotimer',
+        component: PomodoroTimer
     },
     {
         path: '/usage',

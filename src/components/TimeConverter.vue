@@ -16,11 +16,11 @@
 
         <div class="mb-3">
           <label class="form-label">Please select unit</label>
-            <select v-model="selectedUnit" @click="calculate" class="custom-select">
-              <option>hour</option>
-              <option>minute</option>
-              <option>second</option>
-            </select>
+          <select v-model="selectedUnit" @click="calculate" class="custom-select">
+            <option>hour</option>
+            <option>minute</option>
+            <option>second</option>
+          </select>
         </div>
 
         <div class="mb-3 pb-3 border-bottom">
