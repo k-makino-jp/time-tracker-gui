@@ -5,21 +5,20 @@
         <a class="navbar-brand" href="index.html">Time Tracker GUI</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Development
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" target="_blank"
-                  href="https://v3.ja.vuejs.org/guide/introduction.html">Vue.js</a>
-                <a class="dropdown-item" target="_blank"
-                  href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a>
-              </div>
-            </li>
-          </ul>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Development
+            </button>
+            <ul class="dropdown-menu text-small shadow" style="">
+              <li><a class="dropdown-item" target="_blank"
+                  href="https://v3.ja.vuejs.org/guide/introduction.html">Vue.js</a></li>
+              <li> <a class="dropdown-item" target="_blank"
+                  href="https://getbootstrap.jp/docs/5.0/getting-started/introduction/">Bootstrap</a></li>
+            </ul>
+          </div>
         </div>
+
       </div>
     </nav>
   </div>
@@ -35,5 +34,11 @@
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1rem;
+}
+
+#dropdownMenuButton {
+  background-color: #4169e1;
+  border: #4169e1;
+  font-size: 0.9rem;
 }
 </style>
