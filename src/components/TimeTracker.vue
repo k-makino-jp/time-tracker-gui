@@ -42,12 +42,13 @@
     </div>
 
     <div class="card-body">
-      <table class="table">
-        <thead class="table-light">
-          <tr class="bg-light">
-            <th scope="col" style="width: 34%">Task Name</th>
-            <th scope="col" style="width: 33%">Start Time - End Time</th>
-            <th scope="col" style="width: 33%">Time Spend</th>
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 29%">Task Name</th>
+            <th scope="col" style="width: 29%">Start Time - End Time</th>
+            <th scope="col" style="width: 29%">Time Spend</th>
+            <th scope="col" style="width: 13%"></th>
           </tr>
         </thead>
         <tbody class="border-bottom">
@@ -55,13 +56,54 @@
             <td>{{ task.taskName }}</td>
             <td class="each-task-spend-time">{{ task.startTime }} - {{ task.endTime }}</td>
             <td class="each-task-spend-time">{{ task.spendTime }}</td>
+            <td>
+              <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+              </button>
+              <ul class="dropdown-menu text-small shadow" style="">
+                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo" @click="showModal(key)">Edit</a></li>
+                <li><a class="dropdown-item text-danger" @click="removeItem(key)">Clear</a></li>
+              </ul>
+
+            </td>
           </tr>
         </tbody>
       </table>
 
-      <button type="button" @click="removeLocalStorageItem" class="btn btn-secondary mb-3">Clear</button>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  v-show="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Task: {{modalTaskName}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Start Time:</label>
+                  <input v-model="inputStartTime" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name2" class="col-form-label">End Time:</label>
+                  <input v-model="inputEndTime" class="form-control" id="recipient-name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                @click="editItem()">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" @click="removeLocalStorageItem" class="btn btn-outline-danger mb-3">Clear All</button>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -73,6 +115,11 @@ export default {
       totalTimeSpend: '',
       taskName: '',
       tasks: [],
+      inputStartTime: '',
+      inputEndTime: '',
+      modal: false,
+      modalTaskName: '',
+      modalTargetTaskIndex: 0,
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -104,6 +151,78 @@ export default {
       localStorage.removeItem(this.createLocalStorageKey());
       this.tasks = [];
       this.totalTimeSpend = '00:00:00'
+    },
+    showModal(key) {
+      console.log(key)
+      this.inputStartTime = this.tasks[key].startTime;
+      this.inputEndTime = this.tasks[key].endTime;
+      this.modalTargetTaskIndex = key;
+      this.modal = true;
+      this.modalTaskName = this.tasks[key].taskName;
+    },
+    editItem() {
+      const key = this.modalTargetTaskIndex;
+      this.modal = false;
+      const startElement = this.inputStartTime.split(':')
+      const startTimeHours = startElement[0];
+      const startTimeMinutes = startElement[1];
+      const endElement = this.inputEndTime.split(':')
+      const endTimeHours = endElement[0];
+      const endTimeMinutes = endElement[1];
+
+      // calc current spend time
+      const now = new Date();
+      const startTimeStr = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + this.inputStartTime;
+      const endTimeStr = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + this.inputEndTime;
+      const startTime = new Date(startTimeStr);
+      const endTime = new Date(endTimeStr);
+
+      const diffMilliSec = endTime - startTime;
+      const diff = new Date(diffMilliSec);
+      const diffHours = diff.getHours() + (diff.getTimezoneOffset() / 60) + '';
+      const diffMinutes = diff.getMinutes() + '';
+      const diffSeconds = diff.getSeconds() + '';
+      this.currentSpendTime = diffHours.padStart(2, '0') + ":" + diffMinutes.padStart(2, '0') + ":" + diffSeconds.padStart(2, '0');
+
+      const task = {
+        taskName: this.tasks[key].taskName,
+        spendTime: this.currentSpendTime,
+        startTime: startTimeHours.padStart(2, '0') + ':' + startTimeMinutes.padStart(2, '0'),
+        endTime: endTimeHours.padStart(2, '0') + ':' + endTimeMinutes.padStart(2, '0'),
+      };
+      this.tasks.splice(key, 1, task);
+
+      let totalTime = 0;
+      for (let i in this.tasks) {
+        const spendTime = new Date('1970-01-01T' + this.tasks[i].spendTime + 'Z');
+        totalTime += spendTime.getTime();
+      }
+      const total = new Date(totalTime);
+      const totalHours = total.getHours() + (total.getTimezoneOffset() / 60) + '';
+      const totalMinutes = total.getMinutes() + '';
+      const totalSeconds = total.getSeconds() + '';
+      this.totalTimeSpend = totalHours.padStart(2, '0') + ":" + totalMinutes.padStart(2, '0') + ":" + totalSeconds.padStart(2, '0');
+
+      localStorage.setItem(this.createLocalStorageKey(), JSON.stringify(this.tasks));
+    },
+    removeItem(key) {
+      console.log(key, this.tasks)
+      this.tasks.splice(key, 1);
+
+      let totalTime = 0;
+      for (let i in this.tasks) {
+        const spendTime = new Date('1970-01-01T' + this.tasks[i].spendTime + 'Z');
+        totalTime += spendTime.getTime();
+      }
+      const total = new Date(totalTime);
+      const totalHours = total.getHours() + (total.getTimezoneOffset() / 60) + '';
+      const totalMinutes = total.getMinutes() + '';
+      const totalSeconds = total.getSeconds() + '';
+      this.totalTimeSpend = totalHours.padStart(2, '0') + ":" + totalMinutes.padStart(2, '0') + ":" + totalSeconds.padStart(2, '0');
+      this.taskName = '';// clear task name for form
+      this.currentSpendTime = '00:00:00'
+
+      localStorage.setItem(this.createLocalStorageKey(), JSON.stringify(this.tasks));
     },
     canBeStarted() {
       return this.taskName.length > 0
@@ -184,6 +303,10 @@ export default {
 }
 
 .form-control {
+  border-radius: 0%;
+}
+
+.modal-content {
   border-radius: 0%;
 }
 
