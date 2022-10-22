@@ -1,6 +1,6 @@
 <template>
   <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-    <div class="position-sticky list-group list-group-flush scrollarea">
+    <div class="position-sticky list-group list-group-flush">
       <ul class="nav flex-column">
         <li class="nav-item">
           <!-- Tools -->
@@ -38,14 +38,12 @@
 .sidebar {
   position: fixed;
   background-color: #ffffff;
-  /* sidebar area */
-  top: 48px;
+  top: 0;
   bottom: 0;
   left: 0;
-  /* Behind the navbar */
-  padding: 0px 0 0;
-  /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  z-index: 100;
+  padding: 48px 0 0; /* Behind the navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1); /* Height of navbar */
 }
 
 .list-group .list-group-item.sidebaritem {
@@ -63,8 +61,6 @@
 .sidebar .nav-link {
   font-weight: 500;
   color: #333;
-  border-left-color: #ffffff;
-  border-left-width: 4px;
 }
 
 .sidebar .nav-link .feather {
@@ -81,8 +77,6 @@
   border-color: #acacac;
   border-top-color: #e7e7e7;
   border-bottom-color: #e7e7e7;
-  border-left-color: #007bff;
-  border-left-width: 4px;
 }
 
 .sidebar .nav-link:hover .feather,

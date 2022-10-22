@@ -1,7 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
-    <h2>Time Converter</h2>
-  </div>
+  <h2 class="pt-2 pb-2 mb-3 border-bottom">Time Converter</h2>
 
   <div class="card">
     <div class="card-header">
@@ -16,7 +14,7 @@
 
         <div class="mb-3">
           <label class="form-label">Please select unit</label>
-          <select v-model="selectedUnit" @click="calculate" class="custom-select">
+          <select v-model="selectedUnit" @click="calculate" class="form-select">
             <option>hour</option>
             <option>minute</option>
             <option>second</option>
@@ -92,6 +90,11 @@ body {
 .form-control {
   border-radius: 0%;
 }
+
+.form-select {
+  border-radius: 0%;
+}
+
 
 .custom-select {
   border-radius: 0%;

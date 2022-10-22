@@ -1,7 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3 border-bottom">
-    <h2>Pomodoro Timer</h2>
-  </div>
+  <h2 class="pt-2 pb-2 mb-3 border-bottom">Pomodoro Timer</h2>
 
   <div class="card mb-3">
     <div class="card-header">
