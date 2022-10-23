@@ -46,10 +46,10 @@
       <table class="table table-striped align-middle">
         <thead>
           <tr>
-            <th scope="col" style="width: 29%">Task Name</th>
-            <th scope="col" style="width: 29%">Start Time - End Time</th>
-            <th scope="col" style="width: 29%">Time Spend</th>
-            <th scope="col" style="width: 13%"></th>
+            <th scope="col" style="width: 31%">Task Name</th>
+            <th scope="col" style="width: 31%">Start Time - End Time</th>
+            <th scope="col" style="width: 31%">Time Spend</th>
+            <th scope="col" style="width: 7%"></th>
           </tr>
         </thead>
         <tbody class="border-bottom">
@@ -73,7 +73,7 @@
       </table>
 
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Edit Task: {{modalTaskName}}</h5>
