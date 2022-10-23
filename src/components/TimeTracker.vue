@@ -1,5 +1,6 @@
 <template>
   <h2 class="pt-2 pb-2 mb-3 border-bottom">Time Tracker</h2>
+
   <div class="card mb-3">
     <div class="card-header">
       <h4>Current Task</h4>
@@ -62,8 +63,7 @@
                 Action
               </button>
               <ul class="dropdown-menu text-small shadow" style="">
-                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo" @click="showModal(key)">Edit</a></li>
+                <li><a class="dropdown-item" @click="showModal(key)">Edit</a></li>
                 <li><a class="dropdown-item text-danger" @click="removeItem(key)">Clear</a></li>
               </ul>
 
@@ -72,7 +72,7 @@
         </tbody>
       </table>
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  v-show="modal">
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -80,21 +80,25 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form>
+              <form @submit.prevent="editItem">
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Start Time:</label>
-                  <input v-model="inputStartTime" class="form-control" id="recipient-name">
+                  <label class="col-form-label">Task Name:</label>
+                  <input v-model="inputTaskName" class="form-control" pattern=".+" required>
                 </div>
                 <div class="mb-3">
-                  <label for="recipient-name2" class="col-form-label">End Time:</label>
-                  <input v-model="inputEndTime" class="form-control" id="recipient-name">
+                  <label class="col-form-label">Start Time (hh:mm):</label>
+                  <input v-model="inputStartTime" class="form-control" pattern="\d{2}:\d{2}" required>
+                </div>
+                <div class="mb-3 pb-3">
+                  <label class="col-form-label">End Time (hh:mm):</label>
+                  <input v-model="inputEndTime" class="form-control" pattern="\d{2}:\d{2}" required>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                @click="editItem()">Update</button>
             </div>
           </div>
         </div>
@@ -107,6 +111,8 @@
 </template>
 
 <script>
+import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min.js"
+
 export default {
   data() {
     return {
@@ -115,9 +121,10 @@ export default {
       totalTimeSpend: '',
       taskName: '',
       tasks: [],
+      inputTaskName: '',
       inputStartTime: '',
       inputEndTime: '',
-      modal: false,
+      modal: null,
       modalTaskName: '',
       modalTargetTaskIndex: 0,
     }
@@ -153,16 +160,16 @@ export default {
       this.totalTimeSpend = '00:00:00'
     },
     showModal(key) {
-      console.log(key)
+      this.inputTaskName = this.tasks[key].taskName;
       this.inputStartTime = this.tasks[key].startTime;
       this.inputEndTime = this.tasks[key].endTime;
       this.modalTargetTaskIndex = key;
-      this.modal = true;
       this.modalTaskName = this.tasks[key].taskName;
+      // $('#exampleModal').show();
+      this.modalObj.show();
     },
     editItem() {
       const key = this.modalTargetTaskIndex;
-      this.modal = false;
       const startElement = this.inputStartTime.split(':')
       const startTimeHours = startElement[0];
       const startTimeMinutes = startElement[1];
@@ -185,7 +192,7 @@ export default {
       this.currentSpendTime = diffHours.padStart(2, '0') + ":" + diffMinutes.padStart(2, '0') + ":" + diffSeconds.padStart(2, '0');
 
       const task = {
-        taskName: this.tasks[key].taskName,
+        taskName: this.inputTaskName,
         spendTime: this.currentSpendTime,
         startTime: startTimeHours.padStart(2, '0') + ':' + startTimeMinutes.padStart(2, '0'),
         endTime: endTimeHours.padStart(2, '0') + ':' + endTimeMinutes.padStart(2, '0'),
@@ -204,6 +211,8 @@ export default {
       this.totalTimeSpend = totalHours.padStart(2, '0') + ":" + totalMinutes.padStart(2, '0') + ":" + totalSeconds.padStart(2, '0');
 
       localStorage.setItem(this.createLocalStorageKey(), JSON.stringify(this.tasks));
+      // $('#exampleModal').hide();
+      this.modalObj.hide();
     },
     removeItem(key) {
       console.log(key, this.tasks)
@@ -284,6 +293,9 @@ export default {
     },
   },
   mounted() {
+    const modal = document.getElementById('exampleModal')
+    this.modalObj = new Modal(modal)
+
     setInterval(this.updateCurrentTime, 1000);
   }
 }
