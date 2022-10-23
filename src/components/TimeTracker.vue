@@ -63,6 +63,7 @@
                 Action
               </button>
               <ul class="dropdown-menu text-small shadow" style="">
+                <li><a class="dropdown-item" @click="restartTask(key)">Restart</a></li>
                 <li><a class="dropdown-item" @click="showModal(key)">Edit</a></li>
                 <li><a class="dropdown-item text-danger" @click="removeItem(key)">Clear</a></li>
               </ul>
@@ -158,6 +159,14 @@ export default {
       localStorage.removeItem(this.createLocalStorageKey());
       this.tasks = [];
       this.totalTimeSpend = '00:00:00'
+    },
+    restartTask(key) {
+      if (!this.isStarted) {
+        this.taskName = this.tasks[key].taskName;
+        this.startTimeTracking();
+      } else {
+        alert("Another task already started.");
+      }
     },
     showModal(key) {
       this.inputTaskName = this.tasks[key].taskName;
