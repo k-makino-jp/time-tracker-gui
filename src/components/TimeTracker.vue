@@ -12,6 +12,14 @@
             name</label>
           <input v-model="task.name" class="form-control" list="datalistOptions" placeholder="e.g. Coding" pattern=".+"
             required>
+          <datalist id="datalistOptions">
+            <option value="Rest"></option>
+            <option value="Meeting"></option>
+            <option value="Research"></option>
+            <option value="Designing"></option>
+            <option value="Coding"></option>
+            <option value="Testing"></option>
+          </datalist>
         </div>
 
         <div class="mb-3 pb-3 border-bottom">
@@ -69,7 +77,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Task: {{editTask.name}}</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit Task: {{ editTask.name }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -215,11 +223,11 @@ export default {
       // In order to avoid locale, 'Z' should not be appended.
       const startFormatted = task.start.toISOString().substring(0, 11) + this.editTask.startFormatted;
       const endFormatted = task.end.toISOString().substring(0, 11) + this.editTask.endFormatted;
-      
+
       this.editTask.setStart(new Date(startFormatted));
       this.editTask.setEnd(new Date(endFormatted));
       this.tasks[this.targetIndex] = Object.assign({}, this.editTask);
-      
+
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
       this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
       TaskRepository.set(STORAGE_KEY, this.tasks);
