@@ -35,7 +35,7 @@
     </div>
 
     <div class="card-body">
-      <table class="table table-striped align-middle">
+      <table class="table table-hover table-striped align-middle">
         <thead>
           <tr>
             <th scope="col" style="width: 31%">Task Name</th>
@@ -100,6 +100,29 @@
     </div>
   </div>
 
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+      <h4>Total Time Spend for Each Task</h4>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-hover table-striped align-middle">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 62%">Task Name</th>
+            <th scope="col" style="width: 38%">Total Time Spend</th>
+          </tr>
+        </thead>
+        <tbody class="border-bottom">
+          <tr v-for="(task, key) in analyzedTasks" :key="key">
+            <td>{{ task.name }}</td>
+            <td class="each-task-spend-time">{{ task.spendFormatted }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 
 </template>
 
@@ -107,7 +130,7 @@
 import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min.js"
 
 import TaskRepository from "../repository/TaskRepository";
-import { Task, calculateTotalTimeSpend } from "../entity/Task.js";
+import { Task, calculateTotalTimeSpend, calculateTotalTimeSpendForEachTask } from "../entity/Task.js";
 
 const BUTTON_START = 'Start';
 const BUTTON_STOP = 'Stop';
@@ -121,6 +144,7 @@ export default {
       tasks: [],
       totalTimeSpend: '00:00:00',
       editTask: new Task(''),
+      analyzedTasks: [],
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -130,6 +154,7 @@ export default {
     init() {
       this.tasks = TaskRepository.get(STORAGE_KEY);
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
+      this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
     },
     trigger() {
       if (!this.task.start) {
@@ -147,6 +172,7 @@ export default {
       this.task.setEnd(new Date());
       this.tasks.push(Object.assign({}, this.task));
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
+      this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
       TaskRepository.set(STORAGE_KEY, this.tasks);
 
       this.task.clear();
@@ -160,6 +186,7 @@ export default {
       TaskRepository.delete(STORAGE_KEY);
       this.tasks = [];
       this.totalTimeSpend = '00:00:00'
+      this.analyzedTasks = [];
     },
     restart(index) {
       if (!this.task.start) {
@@ -172,6 +199,7 @@ export default {
     remove(key) {
       this.tasks.splice(key, 1);
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
+      this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
       TaskRepository.set(STORAGE_KEY, this.tasks);
     },
     showModal(index) {
@@ -190,9 +218,10 @@ export default {
       
       this.editTask.setStart(new Date(startFormatted));
       this.editTask.setEnd(new Date(endFormatted));
-      this.tasks[this.targetIndex] = this.editTask;
+      this.tasks[this.targetIndex] = Object.assign({}, this.editTask);
       
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
+      this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
       TaskRepository.set(STORAGE_KEY, this.tasks);
       this.modal.hide();
     },

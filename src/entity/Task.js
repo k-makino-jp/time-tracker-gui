@@ -31,3 +31,21 @@ export function calculateTotalTimeSpend(tasks) {
   const total = tasks.reduce((total, task) => total + task.spend, 0);
   return convertUnixtimeToHHMMSS(total);
 }
+
+export function calculateTotalTimeSpendForEachTask(tasks) {
+  const redundantTaskNames = tasks.map(task => task.name);
+  const taskNames = [...new Set(redundantTaskNames)];
+  
+  const analyzedTasks = [];
+  taskNames.forEach(name => {
+    const total = tasks
+      .filter(task => {return task.name === name; })
+      .reduce((total, task) => total + task.spend, 0);
+    analyzedTasks.push({
+      name: name,
+      spend: total,
+      spendFormatted: convertUnixtimeToHHMMSS(total),
+    })
+  });
+  return analyzedTasks;
+}
