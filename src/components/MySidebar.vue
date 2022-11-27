@@ -18,6 +18,10 @@
             <span data-feather="watch"></span>Pomodoro Timer
           </router-link>
 
+          <router-link to="/dropplan" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
+            <span data-feather="trending-down"></span>Drop Plan
+          </router-link>
+
           <!-- References -->
           <h6 class="px-3 mt-3 mb-3 text-muted"> <span>References</span> </h6>
 
