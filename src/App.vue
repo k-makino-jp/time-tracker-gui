@@ -49,6 +49,14 @@ body {
   border-radius: 0%;
 }
 
+.dropdown {
+  border-radius: 0%;
+}
+
+.dropdown-menu {
+  border-radius: 0%;  
+}
+
 .form-control {
   border-radius: 0%;
 }

@@ -3,6 +3,7 @@ import TimeTracker from './components/TimeTracker.vue'
 import TimeConverter from './components/TimeConverter.vue'
 import PomodoroTimer from './components/PomodoroTimer.vue'
 import DropPlan from './components/DropPlan.vue'
+import TaskList from './components/TaskList.vue'
 import TimeTrackerUsage from './components/TimeTrackerUsage.vue'
 
 const routes = [
@@ -21,6 +22,10 @@ const routes = [
     {
         path: '/dropplan',
         component: DropPlan,
+    },
+    {
+        path: '/tasklist',
+        component: TaskList
     },
     {
         path: '/usage',

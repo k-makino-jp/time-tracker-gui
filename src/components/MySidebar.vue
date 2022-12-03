@@ -10,6 +10,10 @@
             <span data-feather="clock"></span>Time Tracker
           </router-link>
 
+          <router-link to="/tasklist" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
+            <span data-feather="list"></span>Task List
+          </router-link>
+
           <router-link to="/timeconverter" active-class="active" class="nav-link list-group-item sidebaritem px-4 py-3">
             <span data-feather="activity"></span>Time Converter
           </router-link>

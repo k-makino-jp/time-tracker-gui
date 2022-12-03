@@ -7,11 +7,19 @@
     </div>
     <div class="card-body">
       <form @submit.prevent="trigger">
-        <div class="mb-3" id="commit-sha-src">
-          <label for="taskname" class="form-label">What are you working on? (1 or more characters)
-            name</label>
-          <input v-model="task.name" class="form-control" id="taskname" placeholder="breaktime, coding, etc"
-            pattern=".+" required>
+        <label for="taskname" class="form-label">What are you working on?</label>
+        <div class="input-group">
+          <input v-model="task.name" class="form-control" id="taskname" placeholder="Enter current task" pattern=".+"
+            required>
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">or select item from registered task list</button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li v-for="(task, key) in registeredTaskList" :key="key"><a class="dropdown-item"
+                @click="overwriteCurrentTaskName(task.name)" href="#">{{ task.name }}</a></li>
+          </ul>
+        </div>
+        <div id="tasknameHelpBlock" class="form-text mb-3">
+          Your current task must be 1 or more characters long. <br>
         </div>
 
         <div class="mb-3 pb-3 border-bottom">
@@ -128,6 +136,7 @@
 import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min.js"
 
 import TaskRepository from "../repository/TaskRepository";
+import LocalStorage from "../infrastructure/LocalStorage"
 import { Task, calculateTotalTimeSpend, calculateTotalTimeSpendForEachTask } from "../entity/Task.js";
 
 const BUTTON_START = 'Start';
@@ -143,6 +152,7 @@ export default {
       totalTimeSpend: '00:00:00',
       editTask: new Task(''),
       analyzedTasks: [],
+      registeredTaskList: [],
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -153,6 +163,7 @@ export default {
       this.tasks = TaskRepository.get(STORAGE_KEY);
       this.totalTimeSpend = calculateTotalTimeSpend(this.tasks);
       this.analyzedTasks = calculateTotalTimeSpendForEachTask(this.tasks);
+      this.registeredTaskList = JSON.parse(LocalStorage.get("time-tracker-gui-work-item"))
     },
     trigger() {
       if (!this.task.start) {
@@ -185,6 +196,9 @@ export default {
       this.tasks = [];
       this.totalTimeSpend = '00:00:00'
       this.analyzedTasks = [];
+    },
+    overwriteCurrentTaskName(key) {
+      this.task.name = key;
     },
     restart(index) {
       if (!this.task.start) {

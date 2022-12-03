@@ -3,7 +3,7 @@
     <h2>Usage</h2>
   </div>
 
-  <div class="card">
+  <div class="card mb-3">
     <div class="card-header">
       <h4>How to use Time Tracker?</h4>
     </div>
@@ -18,8 +18,20 @@
       </ol>
     </div>
   </div>
-</template>
 
+  <div class="card">
+    <div class="card-header">
+      <h4>How to delete unwanted autofill suggestions in Chrome?</h4>
+    </div>
+    <div class="card-body">
+      <ol>
+        <li>Highlight the suggestion you want to clear by hovering your mouse over it.</li>
+        <li>Press the "SHIFT" and "DELETE" keys at the same time.</li>
+      </ol>
+    </div>
+  </div>
+
+</template>
 
 <style scoped>
 body {
