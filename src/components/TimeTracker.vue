@@ -8,18 +8,10 @@
     <div class="card-body">
       <form @submit.prevent="trigger">
         <div class="mb-3" id="commit-sha-src">
-          <label for="exampleInputEmail1" class="form-label">Please enter current task
+          <label for="taskname" class="form-label">What are you working on? (1 or more characters)
             name</label>
-          <input v-model="task.name" class="form-control" list="datalistOptions" placeholder="e.g. Coding" pattern=".+"
-            required>
-          <datalist id="datalistOptions">
-            <option value="Rest"></option>
-            <option value="Meeting"></option>
-            <option value="Research"></option>
-            <option value="Designing"></option>
-            <option value="Coding"></option>
-            <option value="Testing"></option>
-          </datalist>
+          <input v-model="task.name" class="form-control" id="taskname" placeholder="breaktime, coding, etc"
+            pattern=".+" required>
         </div>
 
         <div class="mb-3 pb-3 border-bottom">
@@ -67,7 +59,6 @@
                 <li><a class="dropdown-item" @click="showModal(key)">Edit</a></li>
                 <li><a class="dropdown-item text-danger" @click="remove(key)">Clear</a></li>
               </ul>
-
             </td>
           </tr>
         </tbody>
@@ -94,7 +85,6 @@
                   <label class="col-form-label">End Time (hh:mm:ss):</label>
                   <input v-model="editTask.endFormatted" class="form-control" pattern="\d{2}:\d{2}:\d{2}" required>
                 </div>
-
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" class="btn btn-primary">Update</button>
@@ -244,51 +234,6 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  border-radius: 0%;
-}
-
-.card-header {
-  background-color: #fff;
-}
-
-.btn {
-  border-radius: 0%;
-}
-
-.form-control {
-  border-radius: 0%;
-}
-
-.modal-content {
-  border-radius: 0%;
-}
-
-.list-group .list-group-item.sidebaritem {
-  background-color: #e7e7e7;
-  border-top-color: #e7e7e7;
-  border-bottom-color: #e7e7e7;
-  /* or whatever color you'd like */
-}
-
-.list-group .list-group-item.sidebaritem:hover {
-  background-color: #c0c0c0;
-  border-top-color: #e7e7e7;
-  border-bottom-color: #e7e7e7;
-  /* or whatever color you'd like */
-}
-
-.form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
-}
-
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
-
 .each-task-spend-time {
   font-family: SFMono-Regular;
 }

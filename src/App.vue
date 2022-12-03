@@ -36,4 +36,24 @@ body {
   font-size: .875rem;
   padding-top: 50px;
 }
+
+.card {
+  border-radius: 0%;
+}
+
+.card-header {
+  background-color: #fff;
+}
+
+.btn {
+  border-radius: 0%;
+}
+
+.form-control {
+  border-radius: 0%;
+}
+
+.modal-content {
+  border-radius: 0%;
+}
 </style>
