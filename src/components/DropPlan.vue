@@ -1,8 +1,31 @@
 <template>
-  <h2 class="pt-2 pb-2 mb-3 border-bottom">Drop Plan</h2>
+  <h2 class="pt-2 pb-2 mb-3 border-bottom">Drop Plan (Beta)</h2>
 
   <div v-if="message" class="alert alert-danger" role="alert">
-    {{message}}
+    {{ message }}
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4>Iteration Length</h4>
+    </div>
+    <div class="card-body">
+      <form @submit.prevent="updateIteration" class="row g-3">
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Start Date</label>
+          <input v-model="iterationStart" class="form-control" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}"
+            required>
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">End Date</label>
+          <input v-model="iterationEnd" class="form-control" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}"
+            required>
+        </div>
+        <div class="">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div class="card mb-3">
@@ -52,7 +75,7 @@
 
   <div class="card mb-3">
     <div class="card-header">
-      <h4>Gantt Chart</h4>
+      <h4>Timeline</h4>
     </div>
     <div class="card-body">
       <GChart :type="type" :data="data" :options="options" :settings="settings" />
@@ -63,21 +86,37 @@
 <script>
 import { GChart } from 'vue-google-charts';
 
+import { Iteration } from "../entity/Iteration"
 import LocalStorage from "../infrastructure/LocalStorage"
+import { convertUnixTimeToLocaleDate } from "../utility/Date";
 
 const COLUMNS = [
-  { type: 'string', label: 'Task ID' },
-  { type: 'string', label: 'Task Name' },
-  { type: 'date', label: 'Start Date' },
-  { type: 'date', label: 'End Date' },
-  { type: 'number', label: 'Duration' },
-  { type: 'number', label: 'Percent Complete' },
-  { type: 'string', label: 'Dependencies' },
+  { type: 'string', id: 'Role' },
+  { type: 'string', id: 'Name' },
+  { type: 'string', id: 'style', role: 'style' },
+  { type: 'date', id: 'Start' },
+  { type: 'date', id: 'End' },
 ];
 
-const CHART_TYPE = 'Gantt';
+const CHART_TYPE = 'Timeline';
 
 const STORAGE_KEY = 'time-tracker-gui-drop-plan';
+const STORAGE_KEY_ITERATION = 'time-tracker-gui-drop-plan-iteration'
+
+const COLORCODE_GREEN = '#90ee90';
+const COLORCODE_GRAY = '#d3d3d3';
+
+const TIMELINE_OPTION = {
+  timeline: {
+    colorByRowLabel: true
+  },
+  alternatingRowStyle: false,
+  backgroundColor: '#f8f8f8',
+  hAxis: {
+    count: -1,
+    format: 'M/d\nEEE',
+  },
+}
 
 export default {
   name: 'GoogleChart',
@@ -88,14 +127,19 @@ export default {
     return {
       type: CHART_TYPE,
       data: null,
-      options: { height: 42 },
+      options: {
+        height: 45,
+        ...TIMELINE_OPTION,
+      },
       settings: {
-        packages: ['gantt'],
+        packages: ['timeline'],
       },
       task: {},
       tasks: [],
       rows: [],
       message: '',
+      iterationStart: "",
+      iterationEnd: "",
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -103,27 +147,85 @@ export default {
   },
   methods: {
     init() {
+      const iteration = JSON.parse(LocalStorage.get(STORAGE_KEY_ITERATION));
+      let iterationRow;
+      if (iteration) {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        iterationRow = [
+          [
+            "Current Iteration",
+            "in the past",
+            COLORCODE_GREEN,
+            new Date(iteration.start),
+            new Date(today),
+          ],
+          [
+            "Current Iteration",
+            "in the future",
+            COLORCODE_GRAY,
+            new Date(today),
+            new Date(iteration.end),
+          ],
+          ...this.rows,
+        ]
+      }
+
       const tasks = JSON.parse(LocalStorage.get(STORAGE_KEY));
       if (!tasks) {
         this.tasks = [];
-        return;
+        this.rows = [...iterationRow];
+        // return;
+      } else {
+        this.tasks = tasks;
+        const rows = this.tasks.map(task => [
+          task.name,
+          "",
+          COLORCODE_GRAY,
+          convertUnixTimeToLocaleDate(new Date(task.start).getTime()),
+          convertUnixTimeToLocaleDate(new Date(task.end).getTime()),
+        ]);
+        this.rows = [...iterationRow, ...rows];
       }
-      this.tasks = tasks;
-      console.log(this.tasks);
-      console.log(this.tasks.length);
-      this.rows = this.tasks.map(task => [
-        task.name,
-        task.name,
-        new Date(task.start),
-        new Date(task.end),
-        null,
-        0,
-        null
-      ]);
+
       this.data = [COLUMNS, ...this.rows];
+      console.log(this.data)
       this.options = {
-        height: 42 * (this.tasks.length + 1),
+        height: 50 * (this.rows.length + 1),
+        ...TIMELINE_OPTION,
       };
+    },
+    updateIteration() {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      const start = new Date(this.iterationStart);
+      const end = new Date(this.iterationEnd);
+      const iteration = new Iteration(start, end)
+
+      this.rows = [
+        [
+          "Current Iteration",
+          "in the past",
+          COLORCODE_GREEN,
+          iteration.start,
+          today,
+        ],
+        [
+          "Current Iteration",
+          "in the future",
+          COLORCODE_GRAY,
+          today,
+          iteration.end,
+        ],
+        ...this.rows,
+      ];
+      this.options = {
+        height: 50 * (this.rows.length + 1),
+        ...TIMELINE_OPTION,
+      };
+      this.data = [COLUMNS, ...this.rows];
+      LocalStorage.set(STORAGE_KEY_ITERATION, iteration);
     },
     add() {
       this.message = '';
@@ -133,18 +235,16 @@ export default {
       }
       this.tasks.push(Object.assign({}, this.task));
       const row = [
-        this.task.name, // id
         this.task.name,
+        "",
+        COLORCODE_GRAY,
         new Date(this.task.start),
         new Date(this.task.end),
-        null,
-        0,
-        null,
       ];
       this.rows.push(row);
       this.data = [COLUMNS, ...this.rows];
       this.options = {
-        height: 42 * (this.tasks.length + 1),
+        height: 50 * (this.rows.length + 1),
       };
       LocalStorage.set(STORAGE_KEY, this.tasks);
     },
@@ -152,6 +252,7 @@ export default {
       this.message = '';
 
       LocalStorage.delete(STORAGE_KEY);
+      LocalStorage.delete(STORAGE_KEY_ITERATION);
       this.tasks = [];
       this.rows = [];
       this.data = null;
@@ -162,7 +263,7 @@ export default {
 
 <style scoped>
 .alert {
-  border-radius: 0%;  
+  border-radius: 0%;
 }
 
 .card {
