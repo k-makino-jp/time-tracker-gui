@@ -55,7 +55,6 @@
                 Action (does not work)
               </button>
               <ul class="dropdown-menu text-small shadow" style="">
-                <li><a class="dropdown-item" @click="restart(key)">Restart</a></li>
                 <li><a class="dropdown-item" @click="showModal(key)">Edit</a></li>
                 <li><a class="dropdown-item text-danger" @click="remove(key)">Clear</a></li>
               </ul>
