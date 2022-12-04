@@ -38,10 +38,10 @@
       <table class="table table-hover table-striped align-middle">
         <thead>
           <tr>
-            <th scope="col" style="width: 31%">Task Name</th>
-            <th scope="col" style="width: 31%">Start Date</th>
-            <th scope="col" style="width: 31%">End Date</th>
-            <th scope="col" style="width: 7%"></th>
+            <th scope="col" style="width: 34%">Task Name</th>
+            <th scope="col" style="width: 33%">Start Date</th>
+            <th scope="col" style="width: 33%">End Date</th>
+            <!-- <th scope="col" style="width: 7%"></th> -->
           </tr>
         </thead>
         <tbody class="border-bottom">
@@ -49,7 +49,7 @@
             <td>{{ task.name }}</td>
             <td>{{ task.start }}</td>
             <td>{{ task.end }}</td>
-            <td>
+            <!-- <td>
               <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Action (does not work)
@@ -58,7 +58,7 @@
                 <li><a class="dropdown-item" @click="showModal(key)">Edit</a></li>
                 <li><a class="dropdown-item text-danger" @click="remove(key)">Clear</a></li>
               </ul>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
