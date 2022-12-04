@@ -35,11 +35,11 @@ export function calculateTotalTimeSpend(tasks) {
 export function calculateTotalTimeSpendForEachTask(tasks) {
   const redundantTaskNames = tasks.map(task => task.name);
   const taskNames = [...new Set(redundantTaskNames)];
-  
+
   const analyzedTasks = [];
   taskNames.forEach(name => {
     const total = tasks
-      .filter(task => {return task.name === name; })
+      .filter(task => { return task.name === name; })
       .reduce((total, task) => total + task.spend, 0);
     analyzedTasks.push({
       name: name,
@@ -47,5 +47,6 @@ export function calculateTotalTimeSpendForEachTask(tasks) {
       spendFormatted: convertUnixtimeToHHMMSS(total),
     })
   });
+  analyzedTasks.sort((a, b) => b.spend - a.spend);
   return analyzedTasks;
 }
