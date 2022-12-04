@@ -2,7 +2,7 @@
   <h2 class="pt-2 pb-2 mb-3 border-bottom">Task List</h2>
 
   <div v-if="message" class="alert alert-danger" role="alert">
-    {{message}}
+    {{ message }}
   </div>
 
   <div class="card mb-3">
@@ -66,7 +66,7 @@
       <button type="button" @click="removeAll" class="btn btn-outline-danger">Clear All</button>
     </div>
 
-    
+
   </div>
 
 </template>
@@ -117,7 +117,7 @@ export default {
 
 <style scoped>
 .alert {
-  border-radius: 0%;  
+  border-radius: 0%;
 }
 
 .card {
