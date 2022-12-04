@@ -5,6 +5,7 @@
       <MySidebar></MySidebar>
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <router-view></router-view>
+        <MyFooter></MyFooter>
       </main>
     </div>
   </div>
@@ -13,6 +14,7 @@
 <script>
 import MyHeader from './components/MyHeader.vue'
 import MySidebar from './components/MySidebar.vue'
+import MyFooter from './components/MyFooter.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import feather from 'feather-icons'
@@ -22,6 +24,7 @@ export default {
   components: {
     MyHeader,
     MySidebar,
+    MyFooter,
   },
   mounted() {
     feather.replace();
