@@ -7,7 +7,6 @@
     </div>
     <div class="card-body">
       <form @submit.prevent="trigger">
-        <label for="taskname" class="form-label">What are you working on?</label>
         <div class="input-group">
           <input v-model="task.name" class="form-control" id="taskname" placeholder="Enter current task" pattern=".+"
             required>
